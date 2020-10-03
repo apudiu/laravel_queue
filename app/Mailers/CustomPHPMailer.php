@@ -35,7 +35,7 @@ class CustomPHPMailer implements CustomMailer
         $this->mailer->setFrom(config('mail.from.address'), config('mail.from.name'));
 
         // Debugging
-        $this->captureDebugLog(SMTP::DEBUG_CLIENT);
+        $this->captureDebugLog(SMTP::DEBUG_OFF);
     }
 
     /**

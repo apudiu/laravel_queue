@@ -37,9 +37,9 @@ class TestMail implements CustomMailable
             ->send()
         ;
 
-        dd("Mail sent using provider: {$customMailer->getUsedProvider()['host']}");
+        var_dump("Mail sent using provider: {$customMailer->getUsedProvider()['host']}");
 
-        // return $status;
+        return $status;
     }
 
     /**
