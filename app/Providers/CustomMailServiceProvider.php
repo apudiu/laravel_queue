@@ -17,7 +17,6 @@ class CustomMailServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(CustomMailer::class, CustomPHPMailer::class);
-        // $this->app->bind('App\Mailers\CustomMailer', 'App\Mailers\CustomPHPMailer');
     }
 
     /**

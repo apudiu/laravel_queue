@@ -80,10 +80,10 @@ class CustomPHPMailer implements CustomMailer
      * @return mixed
      * @throws \Throwable
      */
-    public function mailer(CustomMailable $mailer) : CustomMailer
+    public function mailer(View $mailer) : CustomMailer
     {
 
-        $mailMessage = $mailer->build()->render();
+        $mailMessage = $mailer->render();
 
         $this->mailer->MsgHTML($mailMessage);
 
@@ -99,11 +99,6 @@ class CustomPHPMailer implements CustomMailer
         // Apply generic configs
         $this->applyMailConfig();
 
-        // if (empty($this->mailer->Username)) {
-        //     throw new CustomPHPMailerException('Mail server credentials not set!');
-        // }
-
-
         // send the mail
         do {
 
@@ -114,11 +109,11 @@ class CustomPHPMailer implements CustomMailer
 
                 // throwing exception will break the loop
 
-                if (count($this->providers)) {
+                if (!count($this->providers)) {
                     throw new CustomPHPMailerException('No mail providers available');
                 }
 
-                throw new CustomPHPMailerException('Mail send failed with all providers!');
+                throw new CustomPHPMailerException('Mail send failed with all providers (fallbacks)!');
             }
 
             $this->setCredentials($provider);
