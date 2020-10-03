@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\SendTestMail;
+use Exception;
+use Illuminate\Http\Request;
 
 class MailController extends Controller
 {
@@ -30,6 +32,38 @@ class MailController extends Controller
 
         SendTestMail::dispatch();
 
+    }
+
+    public function sendMailFromApi(Request $request) {
+
+        // Here not using laravel validation..
+
+        $times = $request->post('times');
+
+        if (empty($times) || $times < 1 || $times > 10) {
+
+            $data = [
+                'status' => false,
+                'message' => "'times' is required and must be between 1 to 10"
+            ];
+
+            return response($data,400);
+        }
+
+
+
+        for ($i = 0; $i < $times; $i++) {
+
+            SendTestMail::dispatch();
+
+        }
+
+        $data = [
+            'status' => true,
+            'message' => "{$times} mails(s) has been sent to queue"
+        ];
+
+        return response($data);
     }
 
 }
